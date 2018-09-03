@@ -1,0 +1,79 @@
+Org-Babel support for Cypher
+
+* Pre-requisites
+
+- [[https://www.gnu.org/software/emacs/][Emacs]] and [[https://orgmode.org/][Org-Mode]].
+- The Emacs packages: [[https://github.com/zweifisch/ob-cypher][ob-cypher]] and [[https://github.com/magnars/s.el][s]].
+
+* Further Setup
+
+The package [[https://github.com/zweifisch/ob-cypher][ob-cypher]] only works with =neo4j-shell= which has been
+deprecated[fn:1] and [[https://github.com/zweifisch/ob-cypher][ob-cypher]] does not support user authentication.
+
+We add support for =cypher-shell= and Basic Authentication via the
+following elisp code; add it to your Emacs initialisation file:
+
+#+BEGIN_SRC elisp
+(require 'ob-cypher)
+(require 's)
+
+(defun ob-cypher/shell (statement host port user password result-type)
+  (let* ((tmp (org-babel-temp-file "cypher-"))
+         (cmd (s-format
+               "cat  ${file} | cypher-shell -a bolt://${host}:${port} -u ${user} -p ${password}" 'aget
+               `(("host"     . ,host)
+                 ("port"     . ,(int-to-string port))
+                 ("file"     . ,tmp)
+                 ("user"     . ,user)
+                 ("password" . ,password))))
+         (result (progn (with-temp-file tmp (insert statement))
+                        (shell-command-to-string cmd))))
+    (message cmd)
+    (if (string= "output" result-type) result (ob-cypher/table result))))
+
+(defun ob-cypher/query (statement host port user password)
+  (let* ((statement (s-replace "\"" "\\\"" statement))
+         (body (format "{\"statements\":[{\"statement\":\"%s\",\"resultDataContents\":[\"graph\"]}]}"
+                       (s-join " " (s-lines statement))))
+         (url (format "http://%s:%d/db/data/transaction/commit" host port))
+         (tmp (org-babel-temp-file "curl-"))
+         (cmd (format "curl -sH 'Accept: application/json; charset=UTF-8' -H 'Content-Type: application/json' -d@'%s' --user '%s:%s' '%s'" tmp user password url)))
+    (message cmd)
+    (with-temp-file tmp
+      (insert body))
+    (shell-command-to-string cmd)))
+
+(defun ob-cypher/dot (statement host port user password output)
+  (let* ((tmp (org-babel-temp-file "dot-"))
+         (result (ob-cypher/query statement host port user password))
+         (dot (ob-cypher/json-to-dot result))
+         (cmd (format "dot -T%s -o %s %s" (file-name-extension output) output tmp)))
+    (message result)
+    (message dot)
+    (message cmd)
+    (with-temp-file tmp
+      (insert dot))
+    (org-babel-eval cmd "")
+    nil))
+
+(defun org-babel-execute:cypher (body params)
+  (let* ((host (or (cdr (assoc :host params)) "127.0.0.1"))
+         (port (or (cdr (assoc :port params)) 1337))
+         (user (or (cdr (assoc :user params)) "neo4j"))
+         (password (or (cdr (assoc :password params)) "password"))
+         (http-port (or (assoc :host params) 7474))
+         (result-type (cdr (assoc :result-type params)))
+         (output (cdr (assoc :file params)))
+         (body (if (s-ends-with? ";" body) body (s-append ";" body))))
+    (if output (ob-cypher/dot body host http-port user password output)
+      (ob-cypher/shell body host port user password result-type))))
+#+END_SRC
+
+* Footnotes
+
+[fn:1] For instance, connecting through =cypher-shell= with Neo4j 3.4.6
+yields the following output:
+
+#+BEGIN_EXAMPLE
+Please note that neo4j-shell is deprecated and to be replaced by cypher-shell.
+#+END_EXAMPLE
