@@ -73,7 +73,7 @@ We will work with the upstream project to obviate the need for this
 elisp code in the future; you may want to =Watch= this repository if you
 want to keep up with the changes herein and upstream.
 
-* Example
+* Examples
 
 :PROPERTIES:
 :header-args:cypher:    :host "host.goes.here" :password "specifyPasswordHere" :port 7687
