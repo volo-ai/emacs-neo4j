@@ -94,6 +94,20 @@ specified Neo4j server, e.g.:
 : COUNT(n)
 : 311
 
+Let's visualise our query results using an image file:
+
+The shortest path of any relationships from Kevin Bacon to Meg Ryan:
+
+#+BEGIN_SRC cypher :file kevin-shortestpath-meg.png :exports both
+MATCH p=shortestPath(
+  (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
+)
+RETURN p
+#+END_SRC
+
+#+RESULTS:
+[[file:kevin-shortestpath-meg.png]]
+
 * Footnotes
 
 [fn:1] For instance, connecting through =cypher-shell= with Neo4j 3.4.6
