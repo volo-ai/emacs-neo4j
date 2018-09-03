@@ -1,1 +1,7 @@
-Emacs Lisp for Interacting with Neo4j
+*Emacs Lisp for Interacting with Neo4j*
+
+* Org-Babel Support for Cypher
+
+If you are interested in using [[https://en.wikipedia.org/wiki/Literate_programming][Literate Programming]] or rich reproducible
+documentation for shared research or data analysis through [[https://orgmode.org/][Org-Mode]], see
+[[file:ob-cypher.org][ob-cypher]].
