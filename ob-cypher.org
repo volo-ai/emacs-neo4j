@@ -69,6 +69,10 @@ following elisp code; add it to your Emacs initialisation file:
       (ob-cypher/shell body host port user password result-type))))
 #+END_SRC
 
+We will work with the upstream project to obviate the need for this
+elisp code in the future; you may want to Watch this repository if you
+want to keep up with the changes herein and upstream.
+
 * Footnotes
 
 [fn:1] For instance, connecting through =cypher-shell= with Neo4j 3.4.6
