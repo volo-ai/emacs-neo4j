@@ -83,7 +83,7 @@ Let us retrieve the total number of nodes after connecting with a Neo4j
 database using the connection parameters specified in the =PROPERTIES=
 drawer in the org-mode markup; see the raw contents of this file.
 
-#+BEGIN_SRC cypher :results both
+#+BEGIN_SRC cypher :exports both
 MATCH (n) RETURN COUNT(n);
 #+END_SRC
 
