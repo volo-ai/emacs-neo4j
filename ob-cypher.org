@@ -10,8 +10,8 @@ Org-Babel support for Cypher
 The package [[https://github.com/zweifisch/ob-cypher][ob-cypher]] only works with =neo4j-shell= which has been
 deprecated[fn:1] and [[https://github.com/zweifisch/ob-cypher][ob-cypher]] does not support user authentication.
 
-We add support for =cypher-shell= and Basic Authentication via the
-following elisp code; add it to your Emacs initialisation file:
+We add support for =cypher-shell= and authentication via the following
+elisp code; add it to your Emacs initialisation file:
 
 #+BEGIN_SRC elisp
 (require 'ob-cypher)
