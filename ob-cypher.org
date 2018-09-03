@@ -73,6 +73,27 @@ We will work with the upstream project to obviate the need for this
 elisp code in the future; you may want to =Watch= this repository if you
 want to keep up with the changes herein and upstream.
 
+* Example
+
+:PROPERTIES:
+:header-args:cypher:    :host "host.goes.here" :password "specifyPasswordHere" :port 7687
+:END:
+
+Let us retrieve the total number of nodes after connecting with a Neo4j
+database using the connection parameters specified in the =PROPERTIES=
+drawer in the org-mode markup; see the raw contents of this file.
+
+#+BEGIN_SRC cypher :results both
+MATCH (n) RETURN COUNT(n);
+#+END_SRC
+
+By running the above source code block, we can see the results from the
+specified Neo4j server, e.g.:
+
+#+RESULTS:
+: COUNT(n)
+: 311
+
 * Footnotes
 
 [fn:1] For instance, connecting through =cypher-shell= with Neo4j 3.4.6
