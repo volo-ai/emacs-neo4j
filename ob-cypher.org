@@ -101,7 +101,7 @@ We can write a Cypher query to find the shortest path of any
 relationships from Kevin Bacon to Meg Ryan for the good ol' Movies
 database as:
 
-#+BEGIN_SRC cypher :file kevin-shortestpath-meg.png :exports both
+#+BEGIN_SRC cypher :file kevin-shortestpath-meg.svg :exports both
 MATCH p=shortestPath(
   (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
 )
@@ -111,7 +111,7 @@ RETURN p
 Resulting in the following visualisation image:
 
 #+RESULTS:
-[[file:kevin-shortestpath-meg.png]]
+[[file:kevin-shortestpath-meg.svg]]
 
 * Footnotes
 
