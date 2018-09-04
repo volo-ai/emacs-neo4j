@@ -75,7 +75,6 @@ elisp code in the future; you may want to =Watch= this repository if you
 want to keep up with the changes herein and upstream in this space.
 
 * Examples
-
 :PROPERTIES:
 :header-args:cypher:    :host "host.goes.here" :port 7687 :user "neo4j" :password "specifyPasswordHere"
 :END:
@@ -112,6 +111,22 @@ Resulting in the following visualisation image:
 
 #+RESULTS:
 [[file:kevin-shortestpath-meg.svg]]
+
+** Sub-trees inherit the same connection parameters
+
+#+BEGIN_SRC cypher :exports both
+MATCH (n) RETURN COUNT(n);
+#+END_SRC
+
+Returns e.g. for the same server:
+
+#+RESULTS:
+: COUNT(n)
+: 311
+
+You can override the connection parameters for any part of your org-mode
+document but be careful while working across multiple servers to avoid
+running Cypher statements against an unintended server.
 
 * Footnotes
 
