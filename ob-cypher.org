@@ -95,9 +95,11 @@ specified Neo4j server, e.g.:
 : COUNT(n)
 : 311
 
-Let's visualise our query results using an image file:
+Let's visualise the results for another query using an image.
 
-The shortest path of any relationships from Kevin Bacon to Meg Ryan:
+We can write a Cypher query to find the shortest path of any
+relationships from Kevin Bacon to Meg Ryan for the good ol' Movies
+database as:
 
 #+BEGIN_SRC cypher :file kevin-shortestpath-meg.png :exports both
 MATCH p=shortestPath(
@@ -105,6 +107,8 @@ MATCH p=shortestPath(
 )
 RETURN p
 #+END_SRC
+
+Resulting in the following visualisation image:
 
 #+RESULTS:
 [[file:kevin-shortestpath-meg.png]]
