@@ -77,7 +77,7 @@ want to keep up with the changes herein and upstream in this space.
 * Examples
 
 :PROPERTIES:
-:header-args:cypher:    :host "host.goes.here" :password "specifyPasswordHere" :port 7687
+:header-args:cypher:    :host "host.goes.here" :port 7687 :user "neo4j" :password "specifyPasswordHere"
 :END:
 
 Let us retrieve the total number of nodes after connecting with a Neo4j
