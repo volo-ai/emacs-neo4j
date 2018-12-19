@@ -62,7 +62,7 @@ following elisp code; add it to your Emacs initialisation file:
          (port (or (cdr (assoc :port params)) 1337))
          (user (or (cdr (assoc :user params)) "neo4j"))
          (password (or (cdr (assoc :password params)) "password"))
-         (http-port (or (assoc :host params) 7474))
+         (http-port (or (cdr (assoc :http-port params)) 7474))
          (result-type (cdr (assoc :result-type params)))
          (output (cdr (assoc :file params)))
          (body (if (s-ends-with? ";" body) body (s-append ";" body))))
@@ -76,7 +76,7 @@ want to keep up with the changes herein and upstream in this space.
 
 * Examples
 :PROPERTIES:
-:header-args:cypher:    :host "host.goes.here" :port 7687 :user "neo4j" :password "specifyPasswordHere"
+:header-args:cypher:    :host "host.goes.here" :port 7687 :http-port 7474 :user "neo4j" :password "specifyPasswordHere"
 :END:
 
 Let us retrieve the total number of nodes after connecting with a Neo4j
